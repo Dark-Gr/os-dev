@@ -1,7 +1,9 @@
+#![feature(abi_x86_interrupt)]
 #![no_std]
 #![no_main]
 
 mod vga;
+mod interrupts;
 
 use core::panic::PanicInfo;
 use bootloader::{BootInfo, entry_point};
@@ -16,6 +18,8 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 fn kernel_main(_info: &BootInfo) -> ! {
+    interrupts::interrupt_manager::init();
+
     println!("Hello, World!");
     println!("Approximation of PI: {}", 62832.0 / 20000.0);
 
